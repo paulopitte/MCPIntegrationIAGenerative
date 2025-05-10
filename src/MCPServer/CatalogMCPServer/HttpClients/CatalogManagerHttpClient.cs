@@ -21,7 +21,7 @@ public class CatalogManagerHttpClient
 
     public async Task<List<ProductResponse>> GetAllAsync(string? titulo = null)
     {
-        var url = string.IsNullOrWhiteSpace(titulo) ? "products" : $"products?titulo={Uri.EscapeDataString(titulo)}";
+        var url = string.IsNullOrWhiteSpace(titulo) ? "products" : $"products?title={Uri.EscapeDataString(titulo)}";
         var response = await _httpClient.GetAsync(url);
 
         if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
@@ -54,15 +54,15 @@ public class CatalogManagerHttpClient
         return await response.Content.ReadFromJsonAsync<ProductResponse>(_jsonOptions);
     }
 
-    public async Task<int?> CreateProductAsync(CreateProductRequest request)
+    public async Task<ProductResponse?> CreateProductAsync(CreateProductRequest request)
     {
         var response = await _httpClient.PostAsJsonAsync("products", request);
 
         if (!response.IsSuccessStatusCode)
             return null;
 
-        var id = await response.Content.ReadFromJsonAsync<int>(_jsonOptions);
-        return id;
+        var product = await response.Content.ReadFromJsonAsync<ProductResponse>(_jsonOptions);
+        return product;
     }
 
     public async Task<bool> UpdateProductAsync(int id, UpdateProductRequest request)
@@ -71,11 +71,11 @@ public class CatalogManagerHttpClient
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<bool> AtualizarPrecoAsync(int id, decimal novoPreco)
-    {
-        var response = await _httpClient.PatchAsync($"products/{id}/preco/{novoPreco}", null);
-        return response.IsSuccessStatusCode;
-    }
+    //public async Task<bool> AtualizarPrecoAsync(int id, decimal novoPreco)
+    //{
+    //    var response = await _httpClient.PatchAsync($"products/{id}/preco/{novoPreco}", null);
+    //    return response.IsSuccessStatusCode;
+    //}
 
     public async Task<bool> DeleteProductAsync(int id)
     {
