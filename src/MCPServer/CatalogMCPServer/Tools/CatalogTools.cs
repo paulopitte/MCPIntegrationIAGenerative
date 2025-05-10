@@ -10,12 +10,12 @@ namespace DotnetMCPServer.Tools;
 public static class CatalogTools
 {
     [McpServerTool, Description("Busca os produtos do catalogo, definindo um filtro opcional por título")]
-    public static async Task<string> ObterProduto(CatalogManagerHttpClient catalogApiClient,
-        [Description("Filtro opcional pelo título do produto")] string titulo)
+    public static async Task<string> GetProducts(CatalogManagerHttpClient catalogApiClient,
+        [Description("Filtro opcional pelo título do produto")] string title)
     {
         try
         {
-            var products = await catalogApiClient.GetAllAsync(titulo);
+            var products = await catalogApiClient.GetAllAsync(title);
             return products.Count == 0
                 ? "Nenhum produto encontrado"
                 : JsonSerializer.Serialize(products);
@@ -61,6 +61,10 @@ public static class CatalogTools
             return $"Erro ao buscar produto: {ex.Message}";
         }
     }
+
+
+
+
 
     [McpServerTool, Description("Criar/Cadastrar um produto")]
     public static async Task<string> CadastrarProduto(CatalogManagerHttpClient catalogApiClient,

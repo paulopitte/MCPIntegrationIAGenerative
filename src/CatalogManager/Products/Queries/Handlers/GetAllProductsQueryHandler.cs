@@ -6,6 +6,6 @@ public sealed class GetAllProductsQueryHandler(IProductRepository productReposit
 
     public async Task<List<Product>> Handle(GetAllProductsQuery request)
     {
-        return await _productRepository.GetAllProductsAsync();
+        return await _productRepository.GetAllProductsAsync(request.title);
     }
 }

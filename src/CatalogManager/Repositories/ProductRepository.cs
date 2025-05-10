@@ -21,11 +21,12 @@ public class ProductRepository(AppDbContext context) : IProductRepository
         return true;
     }
 
-    public async Task<List<Product>> GetAllProductsAsync()
+    public async Task<List<Product>> GetAllProductsAsync(string? title)
     {
         return await _context.Products
-            .Include(p => p.Category)
             .AsNoTrackingWithIdentityResolution()
+            .Include(p => p.Category)
+            .Where(p => string.IsNullOrWhiteSpace(title) || p.Name.Contains(title))           
             .ToListAsync();
     }
 

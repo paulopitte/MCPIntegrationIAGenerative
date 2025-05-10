@@ -30,7 +30,7 @@ builder.Services.AddHttpClient<CatalogManagerHttpClient>(client =>
     if (!string.IsNullOrEmpty(baseAddress))
         client.BaseAddress = new Uri(baseAddress);
     else
-        client.BaseAddress = new Uri("https://localhost:7294/api/");
+        client.BaseAddress = new Uri("https://localhost:7237/api/");
 });
 
 var app = builder.Build();

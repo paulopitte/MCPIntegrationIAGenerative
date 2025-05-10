@@ -82,9 +82,9 @@ public class ProductsController(IDispatcher dispatcher) : ControllerBase
     //  Mesmo consultas vazias são objetos explícitos
     //  Uniformidade no tratamento de todas as requisições
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(string? title)
     {
-        var query = new GetAllProductsQuery();
+        var query = new GetAllProductsQuery(title);
         var result = await _dispatcher.Dispatch<GetAllProductsQuery, List<Product>>(query);
         return Ok(result);
     }

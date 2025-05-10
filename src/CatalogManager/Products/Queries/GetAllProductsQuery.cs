@@ -1,2 +1,2 @@
 ﻿namespace CatalogManagerAPI.Products.Queries;
-public record GetAllProductsQuery { }
+public record GetAllProductsQuery(string? title);
